@@ -2,23 +2,74 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
+//// helper functions /////
+function calculateWinner (squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
+  for (let [a, b, c] of lines) {
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
+      return squares[a]
+  }
+  return null
+}
+
 class Square extends React.Component {
   render() {
     return (
-      <button className="square">
-        {/* TODO */}
+      <button className="square" onClick={this.props.onClick}>
+        {this.props.value}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      squares: Array(9).fill(null),
+      xIsNext: true
+    }
+  }
+
+  handleClick (i) {
+    console.log(`click of button ${i} handled by the Board's handleClick method`)
+    let temp = this.state.squares.slice()     // to make a copy of the array
+    if (calculateWinner(temp) || temp[i]) {   // if there's a winner or if the field is filled already
+      return
+    }
+    temp[i] = this.state.xIsNext ? 'X' : 'O'
+    this.setState({
+      squares: temp,
+      xIsNext: !this.state.xIsNext
+    })
+  }
+
   renderSquare(i) {
-    return <Square />;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    )
   }
 
   render() {
-    const status = 'Next player: X';
+    const winner = calculateWinner(this.state.squares)
+    let status
+    if (winner) {
+      status = `Winner: ${winner}`
+    } else {
+      status = `Next player: ${this.state.xIsNext?'X':'O'}`
+    }
     return (
       <div>
         <div className="status">{status}</div>
