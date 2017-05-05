@@ -3,7 +3,8 @@ This is my version of the simple Tic Tac Toe app from React's official tutorial.
 
 The app mostly follows the steps of the official tutorial, with some additional tweaks (wip):
 1. Ability to restart the game after a win or a draw
-2. More to follow!
+2. Some markup for the future time steps (if a previous step is reviewed) to avoid confusion
+3. More to follow!
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
