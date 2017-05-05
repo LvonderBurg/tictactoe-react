@@ -120,8 +120,31 @@ class Game extends React.Component {
     let status  // random comment
     if (winner) {
       status = `Winner: ${winner}`
+      setTimeout(() => {
+        if (confirm("New game?")) {
+          this.setState({
+            history: [{
+              squares: Array(9).fill(null)
+            }],
+            xIsNext: true
+          })
+        }
+      }, 500)
     } else {
-      status = `Next player: ${this.state.xIsNext?'X':'O'}`
+      const allFieldsFilled = current.squares.reduce((prev, el) => prev && (el?true:false), true)
+      if (allFieldsFilled) {
+        status = `No winner. Reloading...`
+        setTimeout(() => {
+          this.setState({
+            history: [{
+              squares: Array(9).fill(null)
+            }],
+            xIsNext: true
+          })
+        }, 1000)
+      } else {
+        status = `Next player: ${this.state.xIsNext?'X':'O'}`
+      }
     }
 
     return (
