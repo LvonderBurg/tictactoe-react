@@ -1,3 +1,12 @@
+## Introduction
+This is my version of the simple Tic Tac Toe app from React's official tutorial. Thanks for stopping by!
+
+The app mostly follows the steps of the official tutorial, with some additional tweaks (wip):
+1. Ability to restart the game after a win or a draw
+2. Some markup for the future time steps (if a previous step is reviewed) to avoid confusion
+3. More to follow!
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -1516,17 +1525,17 @@ When you build the project, Create React App will place the `public` folder cont
 2. Install `serve` by running `npm install --save serve`.
 
 3. Add this line to `scripts` in `package.json`:
-    
+
     ```
     "now-start": "serve build/",
     ```
-    
+
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
-    
+
     ```
     > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
-    
+
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)
