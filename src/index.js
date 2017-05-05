@@ -71,13 +71,14 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null)
       }],
+      stepNumber: 0,
       xIsNext: true
     }
   }
 
   handleClick (i) {
     console.log(`click of button ${i} handled by the Board's handleClick method`)
-    const history = this.state.history
+    const history = this.state.history.slice(0, this.state.stepNumber + 1) // only use the history up to the current time step
     const current = history[history.length - 1]
     const squares = current.squares.slice()    // to make a copy of the array
     if (calculateWinner(squares) || squares[i]) {   // if there's a winner or if the field is filled already
@@ -87,14 +88,35 @@ class Game extends React.Component {
     history.push({ squares: squares })
     this.setState({
       history: history,
+      stepNumber: history.length - 1,
       xIsNext: !this.state.xIsNext
+    })
+  }
+
+  jumpTo (step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) ? false : true
     })
   }
 
   render() {
     const history = this.state.history
-    const current = history[history.length - 1]
+    const currStep = this.state.stepNumber
+    const current = history[currStep]
     const winner = calculateWinner(current.squares)
+
+    const moves = history.map((_, i) => {
+      const desc = i ? `Move #${i}` : 'Game start'
+      return (
+        <li key={i}>
+          <a href='#'
+            onClick={() => this.jumpTo(i)}
+            className={i > currStep ? 'future' : 'past'}
+          >{desc}</a>
+        </li>
+      )
+    })
     let status  // random comment
     if (winner) {
       status = `Winner: ${winner}`
@@ -111,7 +133,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
