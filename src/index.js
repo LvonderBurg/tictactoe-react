@@ -95,11 +95,11 @@ class Game extends React.Component {
     const history = this.state.history
     const current = history[history.length - 1]
     const winner = calculateWinner(current.squares)
-    let status
+    let status  // random comment
     if (winner) {
       status = `Winner: ${winner}`
     } else {
-      status = `Next player: ${this.props.xIsNext?'X':'O'}`
+      status = `Next player: ${this.state.xIsNext?'X':'O'}`
     }
 
     return (
